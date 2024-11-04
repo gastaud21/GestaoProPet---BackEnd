@@ -41,18 +41,27 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { dia, mes, ano, tipo, descricao, valor, origem } = req.body;
+  const { dia, mes, ano, tipo, descricao, valor, origem, isEntrada } = req.body;
 
-  if (!dia || !mes || !ano || !tipo || !descricao || !valor || !origem) {
+  if (
+    !dia ||
+    !mes ||
+    !ano ||
+    !tipo ||
+    !descricao ||
+    !valor ||
+    !origem ||
+    !isEntrada
+  ) {
     res.status(400).json({
-      erro: "Informe dia, mes, ano, tipo, descricao, valor, e origem",
+      erro: "Informe dia, mes, ano, tipo, descricao, valor, origem e isEntrada",
     });
     return;
   }
 
   try {
     const lancamento = await prisma.lancamento.create({
-      data: { dia, mes, ano, tipo, descricao, valor, origem },
+      data: { dia, mes, ano, tipo, descricao, valor, origem, isEntrada },
     });
     res.status(201).json(lancamento);
   } catch (error) {
@@ -75,11 +84,20 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { dia, mes, ano, tipo, descricao, valor, origem } = req.body;
+  const { dia, mes, ano, tipo, descricao, valor, origem, isEntrada } = req.body;
 
-  if (!dia || !mes || !ano || !tipo || !descricao || !valor || !origem) {
+  if (
+    !dia ||
+    !mes ||
+    !ano ||
+    !tipo ||
+    !descricao ||
+    !valor ||
+    !origem ||
+    !isEntrada
+  ) {
     res.status(400).json({
-      erro: "Informe dia, mes, ano, tipo, descricao, valor, e origem",
+      erro: "Informe dia, mes, ano, tipo, descricao, valor, origem e isEntrada",
     });
     return;
   }
@@ -87,7 +105,7 @@ router.put("/:id", async (req, res) => {
   try {
     const lancamento = await prisma.lancamento.update({
       where: { id: Number(id) },
-      data: { dia, mes, ano, tipo, descricao, valor, origem },
+      data: { dia, mes, ano, tipo, descricao, valor, origem, isEntrada },
     });
     res.status(200).json(lancamento);
   } catch (error) {

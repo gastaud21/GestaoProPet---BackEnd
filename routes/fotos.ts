@@ -3,6 +3,7 @@ import { Router } from "express";
 import multer from "multer";
 
 const upload = multer({ storage: multer.memoryStorage() });
+// const upload = multer({ dest: "uploads/" }); para salvar em pastas
 
 // const prisma = new PrismaClient()
 const prisma = new PrismaClient({
@@ -60,7 +61,7 @@ router.post("/", upload.single("codigoFoto"), async (req, res) => {
       data: {
         descricao,
         animalId: Number(animalId),
-        codigo_foto: codigo as string,
+        codigoFoto: codigo as string,
       },
     });
     res.status(201).json(fotos);

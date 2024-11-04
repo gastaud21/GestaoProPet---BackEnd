@@ -88,23 +88,25 @@ model Endereco {
 }
 
 model Animal {
-  id                    Int      @id @default(autoincrement())
-  nome                  String   @db.VarChar(30)
-  nascimento_aproximado DateTime @db.Date
-  genero                Generos
-  especie               Especies
-  peso                  Decimal  @db.Decimal(4, 1)
-  porte                 Portes
-  castrado              Castrado @default(Nao)
-  fotos                 Foto[]
-  // status                StatusAnimal @default(Em_Cuidados)
-  // data_castracao        DateTime?    @db.Date
-  // observacao            String       @db.VarChar(255)
-  // historico_adocao      Adotante[]
-  // OLHAR O OQ COLOCAR DE DEFAULT NO HISTÓRICO DE ADOÇÃO
+  id       Int      @id @default(autoincrement())
+  nome     String   @db.VarChar(30)
+  // nascimento_aproximado DateTime @db.Date
+  genero   Generos
+  especie  Especies
+  peso     Decimal  @db.Decimal(4, 1)
+  porte    Portes
+  castrado Castrado @default(Nao)
+  foto     String
+  fotos    Foto[]
 
   @@map("animais")
 }
+
+// status                StatusAnimal @default(Em_Cuidados)
+// data_castracao        DateTime?    @db.Date
+// observacao            String       @db.VarChar(255)
+// historico_adocao      Adotante[]
+// OLHAR O OQ COLOCAR DE DEFAULT NO HISTÓRICO DE ADOÇÃO
 
 enum Generos {
   Macho
@@ -125,11 +127,11 @@ enum Especies {
 }
 
 model Foto {
-  id          Int     @id @default(autoincrement())
-  descricao   String  @db.VarChar(30)
-  codigo_foto String  @db.Text
-  Animal      Animal? @relation(fields: [animalId], references: [id])
-  animalId    Int?
+  id         Int     @id @default(autoincrement())
+  descricao  String  @db.VarChar(30)
+  codigoFoto String  @db.Text
+  Animal     Animal? @relation(fields: [animalId], references: [id])
+  animalId   Int?
   // Funcionario Funcionario[]
   // Adotante    Adotante[]
 
@@ -194,6 +196,7 @@ model Lancamento {
   descricao String          @db.VarChar(40)
   valor     Decimal         @db.Decimal(10, 2)
   origem    String          @db.VarChar(15)
+  isEntrada Boolean
 
   @@map("lancamentos")
 }
